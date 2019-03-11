@@ -16,7 +16,6 @@ class RemoveCaseForm extends Component {
 
         return (
             <Form 
-                horizontal
                 noValidate
                 className={ formIsValid ? '' : 'formHasErrors' }>
                 
@@ -25,7 +24,9 @@ class RemoveCaseForm extends Component {
                 <Button 
                     type="submit" 
                     onClick={this.handleSubmit}
-                    bsStyle="danger">
+                    variant="danger"
+                    size="lg"
+                    block>
                     Delete Case?
                 </Button>
 

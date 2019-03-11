@@ -29,34 +29,30 @@ const CaseCollection = (props) => {
             <td id="caseEditCell"> 
                 <div>
 						<Button id="controlButton" 
-						bsStyle="info" 
-						bsSize="small"
 						onClick={boundEditCase}
+                        variant="outline-primary"
 						>
-							{/*<Glyphicon glyph="pencil" />*/}
+                        <i className="fa fa-edit"/>
 						</Button>
                 </div>
             </td>
             <td id="caseDeleteCell">
                 <div>
 						<Button 
-						bsStyle="danger" 
-						bsSize="small"
+                        variant="outline-danger"
 						onClick={boundRemoveCase}
 						>
-							{/*<Glyphicon glyph="remove" />*/}
+                        <i className="fa fa-trash"/>
 						</Button>
                 </div>
             </td>
             <td>
                 <div id="caseViewCell">
 						<Button 
-						bsStyle="warning" 
-						bsSize="small"
-						
+                        variant="outline-info"
 						href={viewURL}
 						>
-							{/*<Glyphicon glyph="zoom-in" />*/}
+                        <i className="fa fa-eye"/>
 						</Button>
                 </div>
             </td>

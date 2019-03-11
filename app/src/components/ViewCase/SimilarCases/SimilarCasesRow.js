@@ -1,9 +1,10 @@
 import React from 'react';
-import {Button, Glyphicon } from 'react-bootstrap'
+import {Button } from 'react-bootstrap'
 
 
 const SimilarCasesRow = (props) => {
     const url = "/case/" + props.id;
+    
     return (
         <tr id="caseRow"> 
             <td>
@@ -19,12 +20,9 @@ const SimilarCasesRow = (props) => {
             <td>
                 <div id="caseViewCell">
 						<Button 
-						bsStyle="warning" 
-						bsSize="small"
-						
-						href={url}
+						    href={url}
 						>
-							<Glyphicon glyph="zoom-in" />
+						<i className="fa fa-eye"/>
 						</Button>
                 </div>
             </td>

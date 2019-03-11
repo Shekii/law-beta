@@ -17,60 +17,44 @@ class EditCaseForm extends Component {
         
         return (
             <div>
-            <Form 
-                horizontal
-                noValidate
-                className={ formIsValid ? '' : 'formHasErrors' }>
+                <Form>
                 <input 
                     type="hidden"
                     name="id"
                     id="id"
-                    value={this.props.cte.id}
-            />
-                <FormGroup 
-                    noValidate controlId="formHorizontalName">
-                    {/*<Col componentClass={ControlLabel} sm={2}>Case Name</Col>*/}
-                    <Col sm={10}>
-                        <FormControl 
-                            required type="text" 
-                            value={this.props.cte.caseName} 
-                            name="caseName" 
-                            placeholder="Case Name"
-                            onChange={this.handleInputChange}/>
-                    </Col>
-                </FormGroup>
-                <FormGroup controlId="formHorizontalDate">
-                    {/*<Col componentClass={ControlLabel} sm={2}>Case Date</Col>*/}
-                    <Col sm={10}>
-                        <FormControl 
-                            required type="date" 
-                            value={this.props.cte.caseDate} 
-                            name="caseDate" 
-                            placeholder="Case Date" 
-                            onChange={this.handleInputChange}/>
-                    </Col>
-                </FormGroup>
-                <FormGroup controlId="formHorizontalText">
-                    {/*<Col componentClass={ControlLabel} sm={2}>Case Text</Col>*/}
-                    <Col sm={10}>
-                        <FormControl  
-                            required type="text" 
-                            value={this.props.cte.text} 
-                            name="text" 
-                            placeholder="Case Text" 
-                            onChange={this.handleInputChange}/>
-                    </Col>
-                </FormGroup> 
+                    value={this.props.cte.id}/>
+                    <Form.Group controlId="formHorizontalCaseName">
+                        <Form.Label>Case Name</Form.Label>
+                        <Form.Control type="text"
+                                      name="caseName"
+                                      value={this.props.cte.caseName} 
+                                      onChange={this.handleInputChange} />
+                    </Form.Group>
+                    <Form.Group controlId="formHorizontalCaseDate">
+                        <Form.Label>Date of Case</Form.Label>
+                        <Form.Control type="date"
+                                      name="caseDate"
+                                      value={this.props.cte.caseDate} 
+                                      onChange={this.handleInputChange} />
+                    </Form.Group>
+                    <Form.Group controlId="formHorizontalCaseText">
+                        <Form.Label>Case Text</Form.Label>
+                        <Form.Control as="textarea"
+                                      rows="3"
+                                      value={this.props.cte.text}
+                                      name="text"
+                                      onChange={this.handleInputChange} />
+                    </Form.Group>
                 
-                <Row className="show-grid">
-                        <Button 
-                            type="submit" 
-                            onClick={this.handleSubmitUpdate}
-                            bsStyle="success" bsSize="large">
-                            Save
-                        </Button>
-                </Row>  
-            </Form>
+                    <Button 
+                        type="submit" 
+                        onClick={this.handleSubmitUpdate}
+                        variant="success"
+                        size="lg"
+                        block>
+                        Save Case
+                    </Button>
+                </Form>
             </div>
         );
     }

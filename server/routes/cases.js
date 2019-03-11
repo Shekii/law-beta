@@ -163,7 +163,7 @@ router.post('/cases/:id/edit', upload.array(), function(req, res) {
 });
 
 
-//Delete pet
+//Delete case
 router.get('/cases/(:id)/delete', function(req, res) {
 
     dal.deleteById(req, res, function(stat, err) {

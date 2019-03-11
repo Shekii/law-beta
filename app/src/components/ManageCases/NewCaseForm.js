@@ -5,106 +5,76 @@ import {
 
 
 class NewCaseForm extends Component {
+
     constructor(props) {
         super(props);
         this.handleSubmit = props.hs;
         this.handleInputChange = props.hic;
+
+        this.state = { 
+            validated: false
+        };
     }
 
-
     render() {
-        const { formIsValid } = true;
+        const { validated } = this.state;
 
         return (
-            <Form 
-                //onSubmit={this.handleSubmitNewAnimal}
-                horizontal
-                noValidate
-                className={ formIsValid ? '' : 'formHasErrors' }>
-                <FormGroup 
-                    noValidate controlId="formHorizontalCaseName">
-                    {/*<Col componentClass={ControlLabel} sm={2}>Case Name</Col>*/}
-                    <Col sm={10}>
-                        <FormControl 
-                            required type="text" 
-                            name="caseName" 
-                            placeholder="Case Name"
-                            onChange={this.handleInputChange}/>
-                    </Col>
-                </FormGroup>
-                <FormGroup controlId="formHorizontalCaseDate">
-                    {/*<Col componentClass={ControlLabel} sm={2}>Case Date</Col>*/}
-                    <Col sm={10}>
-                        <FormControl 
-                            required type="date" 
-                            name="caseDate" 
-                            placeholder="Case Date" 
-                            onChange={this.handleInputChange}/>
-                    </Col>
-                </FormGroup>
-                <FormGroup controlId="formHorizontalCaseText">
-                    {/*<Col componentClass={ControlLabel} sm={2}>Case Text</Col>*/}
-                    <Col sm={10}>
-                        <FormControl  
-                            required type="text" 
-                            name="text" 
-                            placeholder="Case Text" 
-                            onChange={this.handleInputChange}/>
-                    </Col>
-                </FormGroup>
+                <Form
+                    noValidate
+                    validated={validated}>
+
+                    <Form.Group controlId="formHorizontalCaseName">
+                        <Form.Label>Case Name</Form.Label>
+                        <Form.Control 
+                                    type="text"
+                                    required
+                                    name="caseName"
+                                    onChange={this.handleInputChange} />
+                        <Form.Control.Feedback type="invalid">
+                            Please enter a name.
+                        </Form.Control.Feedback>
+                        <Form.Control.Feedback type="valid">
+                            Looks good.
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group controlId="formHorizontalCaseDate">
+                        <Form.Label>Date of Case</Form.Label>
+                        <Form.Control type="date"
+                                      required
+                                      name="caseDate"
+                                      onChange={this.handleInputChange} />
+                        <Form.Control.Feedback type="invalid">
+                            Please select a date.
+                        </Form.Control.Feedback>
+                        <Form.Control.Feedback type="valid">
+                            Looks good.
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group controlId="formHorizontalCaseText">
+                        <Form.Label>Case Text</Form.Label>
+                        <Form.Control as="textarea"
+                                      rows="3"
+                                      required
+                                      name="text"
+                                      onChange={this.handleInputChange} />
+                        <Form.Control.Feedback type="invalid">
+                            Please enter some case text.
+                        </Form.Control.Feedback>
+                        <Form.Control.Feedback type="valid">
+                            Looks good.
+                        </Form.Control.Feedback>
+                    </Form.Group>
                 
-                <Button 
-                    type="submit" 
-                    //onClick={this.handleSubmitNewAnimal}
-                    onClick={this.handleSubmit}
-                    bsStyle="success">
-                    Add Case</Button>
-            </Form>
-            // <form 
-            //     noValidate 
-            //     className={ formIsValid ? '' : 'formHasErrors' }>
-
-            //     <label htmlFor="nom">Pet's Name</label>
-            //     <input
-            //         name="nom"
-            //         id="nom"
-            //         type="text"                    
-            //         onChange={this.handleInputChange} 
-            //     />
-            //     <label htmlFor="species">Species</label>
-            //     <input
-            //         name="species"
-            //         id="species"
-            //         type="text"
-            //         onChange={this.handleInputChange} 
-            //     />
-            //     <label htmlFor="breed">Breed</label>
-            //     <input
-            //         name="breed"
-            //         id="breed"
-            //         type="text"
-            //         onChange={this.handleInputChange} 
-            //     />
-            //     <label htmlFor="age">Pet's Age</label>
-            //     <input
-            //         name="age"
-            //         id="age"
-            //         type="text"
-            //         onChange={this.handleInputChange} 
-            //     />
-            //     <label htmlFor="colour">Colour</label>
-            //     <input
-            //         name="colour"
-            //         id="colour"
-            //         type="text"
-            //         onChange={this.handleInputChange} 
-            //     />
-
-            //     <button 
-            //         onClick={this.handleSubmit}>
-            //         Submit
-            //     </button>
-            // </form>
+                    <Button 
+                        type="submit" 
+                        //onClick={this.handleSubmitNewAnimal}
+                        onClick={e => this.handleSubmit(e)}
+                        variant="success"
+                        size="lg"
+                        block>
+                        Add Case</Button>
+                </Form>
         );
     }
 

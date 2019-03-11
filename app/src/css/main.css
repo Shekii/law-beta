@@ -55,6 +55,13 @@
 	tr td:nth-child(3), tr th:nth-child(3)	{ display:none; visibility:hidden; }
 } */
 
+.pageBody {
+    margin-top: 80px;
+}
+
+#manageTable {
+
+}
 #caseDeleteCell, #caseViewCell, #caseEditCell {
     text-align: center;
 }
@@ -63,7 +70,6 @@
     max-height: 200px;
     overflow-y: auto;
     border: 1px solid grey;
-
 }
 
 #header {
@@ -75,4 +81,23 @@
     margin-right:auto;
     margin-left:auto;
     display:block;
+}
+.pageBodyHome {
+    margin-top: 55px;
+}
+
+#caseTabs {
+    text-align:center;
+    border: 0;
+}
+
+.caseTab {
+    width: 100%;
+}
+.loader {
+    margin-top: 25%;
+    text-align: center;
+}
+.loaderBlock { 
+    text-align: center;
 }

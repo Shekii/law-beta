@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
-import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
-import * as constants from '../static/constants.js';
+// import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
+import * as constants from '../../static/constants.js'; 
 
 import CaseConcepts from './CaseConcepts';
 import CaseConceptsRow from './CaseConceptsRow';
@@ -15,6 +15,8 @@ import CaseEmotionsRow from './CaseEmotionsRow';
 
 import CaseLoaded from './CaseLoaded';
 import ErrorMessage from '../ErrorMessage';
+
+import DotLoader from '../Dot_Loader';
 
 import '../../css/main.css';
 
@@ -56,35 +58,44 @@ class Case extends Component {
 
                 let caseConcepts = [];
 
-                data.enriched_text.concepts.forEach(it => {
-                    caseConcepts.push(<CaseConceptsRow
-                        key={Math.random()}
-                        title={it.text}
-                        relevance={Math.round(it.relevance * 100)} 
+                if (typeof data.enriched_text.concepts !== undefined) {
+                    data.enriched_text.concepts.forEach(it => {
+                        caseConcepts.push(<CaseConceptsRow
+                            key={Math.random()}
+                            title={it.text}
+                            relevance={Math.round(it.relevance * 100)} 
 
-                    />);
-                });
-
+                        />);
+                    });
+                }
+                
                 let caseCategories = [];
-                data.enriched_text.categories.forEach(it => {
-                    caseCategories.push(<CaseCategoryRow
-                        key={Math.random()}
-                        label={it.label}
-                        score={Math.round(it.score * 100)}
 
-                    />);
-                });
+                if (data.enriched_text.caseCategories !== null) {
+                    data.enriched_text.categories.forEach(it => {
+                        caseCategories.push(<CaseCategoryRow
+                            key={Math.random()}
+                            label={it.label}
+                            score={Math.round(it.score * 100)}
+
+                        />);
+                    });
+                }
 
                 let caseEmotions = [];
-                caseEmotions.push(<CaseEmotionsRow
-                        key={Math.random()}
-                        disgust={Math.round(data.enriched_text.emotion.document.emotion.disgust*100)}
-                        joy={Math.round(data.enriched_text.emotion.document.emotion.joy*100)}
-                        anger={Math.round(data.enriched_text.emotion.document.emotion.anger*100)}
-                        fear={Math.round(data.enriched_text.emotion.document.emotion.fear*100)}
-                        sadness={Math.round(data.enriched_text.emotion.document.emotion.sadness*100)}
+
+                if (data.enriched_text.caseEmotions !== null) {
+                    caseEmotions.push(<CaseEmotionsRow
+                            key={Math.random()}
+                            disgust={Math.round(data.enriched_text.emotion.document.emotion.disgust*100)}
+                            joy={Math.round(data.enriched_text.emotion.document.emotion.joy*100)}
+                            anger={Math.round(data.enriched_text.emotion.document.emotion.anger*100)}
+                            fear={Math.round(data.enriched_text.emotion.document.emotion.fear*100)}
+                            sadness={Math.round(data.enriched_text.emotion.document.emotion.sadness*100)}
 
                     />);
+                }
+
 
                 this.setState ({emotions: caseEmotions});
                 this.setState ( {categories: caseCategories});
@@ -97,7 +108,7 @@ class Case extends Component {
   render() {
       
     const isLoaded = this.state.isLoaded;
-    let viewCase = <ErrorMessage error="Case loading..."/>
+    let viewCase = <DotLoader loading={true}/>
 
     if (isLoaded === true) {
         viewCase = 
@@ -109,9 +120,9 @@ class Case extends Component {
 
     return (
         <div>
-            <div className="container">
+            <div className="container pageBody">
                 
-                <BreadcrumbsItem to='#'>Case Analysis</BreadcrumbsItem>
+                {/* <BreadcrumbsItem to='#'>Case Analysis</BreadcrumbsItem> */}
                 
                 {viewCase}
 

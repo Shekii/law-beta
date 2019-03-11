@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
-import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
-import * as constants from '../static/constants.js';
+// import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
+import * as constants from '../../static/constants.js';
 
 import CaseConcepts from './CaseConcepts';
 import CaseConceptsRow from './CaseConceptsRow';
@@ -12,80 +12,59 @@ import CaseCategoryRow from './CaseCategoryRow';
 import CaseEmotions from './CaseEmotions';
 import CaseEmotionsRow from './CaseEmotionsRow';
 
-import SimilarCases from './SimilarCases/SimilarCasesTable';
+import SimilarCases from './SimilarCases/SimilarCases';
 
 import ErrorMessage from '../ErrorMessage';
 
 import { 
      Button, 
-     FormGroup, Form, Col, ControlLabel, FormControl, Tabs, Tab } from 'react-bootstrap';
+     FormGroup, Form, Col, ControlLabel, Row, FormControl, Tabs, Tab } from 'react-bootstrap';
 
 import '../../css/main.css'; 
 
 const CaseLoaded = (props) => {
     return (
         <div>
-            <BreadcrumbsItem to='/manage'>{props.case.caseName}</BreadcrumbsItem>
-            <h4>Case Name: <small>{props.case.caseName}</small></h4>
-            <h4>Case Date: <small>{props.case.caseDate}</small></h4>
-            <div className="caseTextView">
-                <p><small>{props.case.text}</small> </p>
-            </div>
-
-            {/*<div className="formViewCase">
-                <Form 
-                    horizontal
-                    noValidate>
-                    <FormGroup 
-                        noValidate controlId="">
-                        <Col sm={10}>
-                            <FormControl 
-                                required type="text" 
-                                readOnly 
-                                defaultValue={props.case.caseName}/>
-                        </Col>
-                    </FormGroup>
-                    <FormGroup 
-                        noValidate controlId="">
-                        <Col sm={10}>
-                            <FormControl 
-                                readOnly 
-                                required type="text" 
-                                defaultValue={props.case.caseDate}/>
-                        </Col>
-                    </FormGroup>
-                    <FormGroup 
-                        noValidate controlId="">
-                        <textarea 
-                            readOnly 
-                            className="form-control"
-                            required type="text" 
-                            defaultValue={props.case.text}
-                            as="textarea" 
-                            row="10"/>
-                    </FormGroup>
-                </Form>
-            </div>*/}
-
+            <Form>
+                <Row>
+                    <Col>
+                        <Form.Group controlId="formHorizontalCaseName">
+                            <Form.Label><strong>Case Name</strong></Form.Label>
+                            <Form.Control type="text"
+                                        defaultValue={props.case.caseName}/>
+                        </Form.Group>
+                    </Col>
+                    <Col>
+                        <Form.Group controlId="formHorizontalCaseDate">
+                            <Form.Label><strong>Case Date</strong></Form.Label>
+                            <Form.Control type="text"
+                                        defaultValue={props.case.caseDate}/>
+                        </Form.Group>
+                    </Col>
+                </Row>
+                <Form.Group controlId="formHorizontalCaseText">
+                    <Form.Control as="textarea"
+                                    rows="3"
+                                    defaultValue={props.case.text}/>
+                </Form.Group>
+            </Form>
 
             <div className="container">
                 <h2>Case analysis</h2>
-                <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-                    <Tab eventKey="home" title="Concepts">
+                <Tabs defaultActiveKey="profile" id="caseTabs">
+                    <Tab eventKey="home" title="Concepts" className="caseTab">
                         <CaseConcepts concepts={props.concepts}/>
                     </Tab>
-                    <Tab eventKey="profile" title="Categories">
+                    <Tab eventKey="profile" title="Categories" className="caseTab">
                         <CaseCategories categories={props.categories}/>
                     </Tab>
-                    <Tab eventKey="contact" title="Emotions">
+                    <Tab eventKey="contact" title="Emotions" className="caseTab">
                         <CaseEmotions emotions={props.emotions}/> 
                     </Tab>
                 </Tabs>
 
-                <h2>Similar Cases</h2>
-                <SimilarCases
-                        concepts={props.concepts}
-                        case={props.case}/>
+                <h4>Similar Cases</h4>
+                <SimilarCases case={props.case}/>
             </div>
             </div>
 

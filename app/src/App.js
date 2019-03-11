@@ -3,14 +3,15 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Home from './components/Home/Home.js';
+
 import Header from './components/Header/Header.js';
+import Footer from './components/Footer/Footer.js';
 
 import ManageCases from './components/ManageCases/ManageCases';
 
+import Case from './components/ViewCase/Case';
 
-
-// import { Breadcrumbs, BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
-
+import Search from './components/Search/Search';
 
 /* App component */
 class App extends Component {
@@ -23,8 +24,14 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home}/>
             <Route path="/manage" exact component={ManageCases}/>
+            <Route path="/case/:id" exact component={Case}/>
+            <Route path="/search" exact component={Search}/>
             <Route component={Home}/>
           </Switch>
+        
+        <Footer/>
+
+
 
       </div>
     )
