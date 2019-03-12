@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import * as constants from '../../static/constants.js';
 
-import DotLoader from '../Dot_Loader.js';
+import ClipLoader from '../Clip_Loader.js';
+
+import SuccessMessage from '../SuccessMessage';
+import ErrorMessage from '../ErrorMessage';
 
 import { 
-     Button, 
-     FormGroup, Form, Col, InputGroup, FormControl} from 'react-bootstrap';
+     Button, Form, Col} from 'react-bootstrap';
 
 class UploadCase extends Component {
 
@@ -18,13 +20,13 @@ class UploadCase extends Component {
       caseName: '',
       caseDate: '',
       message: '',
+      error: '',
       loading: false,
       text: ''
      };
 
      this.handleInputChange = this.handleInputChange.bind(this);
   }
-
 
   async handleInputChange(event) {
       const target = event.target;
@@ -56,15 +58,15 @@ class UploadCase extends Component {
           body:JSON.stringify(nu),
           headers: { "Content-Type": "application/json; charset=utf-8" }
       })
-      .then(this.setState({loading: true}))
-      .then(console.log(this.state.loading))
       .then(res => res.json())
       .then(item => {
         if (item.success === true) {
-          this.setState({message: item.message});
-          this.setState({loading: true});
-        } else {
+            this.setState({message: item.message});
+            this.setState({loading: false});
 
+            this.setState({caseName: '', text: '', caseDate: ''});
+        } else {
+          this.setState({error: item.message})
         }
         console.log(item);
       })
@@ -106,12 +108,27 @@ class UploadCase extends Component {
 
   }
 
-
   render() {
     const { validated } = this.state;
+
+    let result;
+
+    if (this.state.message.length > 0) {
+      result = <SuccessMessage 
+          message={this.state.message}/>
+     } else if (this.state.error.length > 0) {
+        result = <ErrorMessage 
+            error={this.state.message}/>
+     }
+
+
+
     return (
       <div className="container pageBody">
         <h3 className="display-4">Upload New Case</h3><br></br>
+
+        {result}
+
         <Form
           noValidate
           validated={validated}
@@ -174,7 +191,9 @@ class UploadCase extends Component {
             Insert Case <span className="fa fa-plus"/>
            </Button>
         </Form>
-        {<DotLoader loading={this.state.loading}/> }
+        {<ClipLoader 
+          loading={this.state.loading}
+          size={55}/> }
       </div>
     );
   }

@@ -2,7 +2,6 @@ import React from 'react';
 import { css } from '@emotion/core';
 // First way to import
 import { PropagateLoader } from 'react-spinners';
-import { DotLoader } from 'react-spinners';
 // Another way to import
 
 import '../css/main.css';

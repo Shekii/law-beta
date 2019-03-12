@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 
 import CasesTable from './CasesTable';
-import NewCaseForm from './NewCaseForm';
 import EditCaseForm from './EditCaseForm';
 import RemoveCaseForm from './RemoveCaseForm';
 import CaseCollection from './CaseCollection';
 
 import * as constants from '../../static/constants.js';
 
-import {  Modal, Button, Table } from 'react-bootstrap';
+import ClipLoader from '../Clip_Loader.js';
+
+import {  Modal, Button } from 'react-bootstrap';
 
 class ManageCasesLoaded extends Component {
 
@@ -20,16 +21,15 @@ class ManageCasesLoaded extends Component {
             formIsValid:false, 
             caseToEdit:[], 
             caseToRemove:[], 
-            showNewCaseModal:false, 
             showEditCaseModal:false, 
             showCaseCaseModal:false,
             showAdd: false,
             showEdit: false,
             showDelete: false,
+            deleteLoading: false,
             caseName:'', text:'', caseDate:''
         };
 
-        this.handleSubmitNewCase = this.handleSubmitNewCase.bind(this);
         this.handleSubmitUpdate = this.handleSubmitUpdate.bind(this);
         this.handleSubmitDelete = this.handleSubmitDelete.bind(this);
 
@@ -37,8 +37,6 @@ class ManageCasesLoaded extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleUpdateChange = this.handleUpdateChange.bind(this);
 
-        this.handleOpenNewCaseModal = this.handleOpenNewCaseModal.bind(this);
-        this.handleCloseNewCaseModal = this.handleCloseNewCaseModal.bind(this);
         this.handleOpenEditCaseModal = this.handleOpenEditCaseModal.bind(this);
         this.handleCloseEditCaseModal = this.handleCloseEditCaseModal.bind(this);
         this.editCase = this.editCase.bind(this);
@@ -46,9 +44,6 @@ class ManageCasesLoaded extends Component {
         this.handleOpenRemoveCaseModal = this.handleOpenRemoveCaseModal.bind(this);
         this.handleCloseRemoveCaseModal = this.handleCloseRemoveCaseModal.bind(this);
         this.removeCase = this.removeCase.bind(this);
-
-        this.handleShowAdd = this.handleShowAdd.bind(this);
-        this.handleCloseAdd = this.handleCloseAdd.bind(this);
 
         this.handleShowEdit = this.handleShowEdit.bind(this);
         this.handleCloseEdit = this.handleCloseEdit.bind(this);
@@ -81,40 +76,8 @@ class ManageCasesLoaded extends Component {
 
     }
 
-    async handleSubmitNewCase(event) {
-        event.preventDefault();
-
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        } else {
-            this.setState({ formIsValid: true });
-
-            let nu = {
-                caseName:this.state.caseName,
-                caseDate:this.state.caseDate,
-                text:this.state.text,
-            };
-            fetch(constants.API + '/cases_discovery', {
-                method: "POST",
-                body:JSON.stringify(nu),
-                headers: { "Content-Type": "application/json; charset=utf-8" }
-            })
-            .then(response => {
-                response.json()
-                .then(status => {
-                    console.log("Successful "+ status);
-                })
-            })
-            .then(this.handleCloseNewCaseModal())
-            .then(window.location.reload());
-        }
-
-    }
-
     async handleSubmitDelete(event) {
-        console.log(this.state.caseToRemove);
+        //console.log(this.state.caseToRemove);
         
         event.preventDefault();
         if (!event.target.checkValidity()) {
@@ -122,31 +85,31 @@ class ManageCasesLoaded extends Component {
             // form is invalid! so we do nothing
             return;
         }
+
         this.setState({ formIsValid: true });
 
-        let url = constants.API + '/cases_discovery/'+ this.state.caseToRemove.id +'/delete';
-        console.log(url);
+        this.setState({deleteLoading: true});
 
-        //http://localhost:3050/api/cases_discovery/4d084294-d82b-4672-a933-44bbb2ee3313/edit
+        let url = 
+            constants.API + '/cases_discovery/'+
+            this.state.caseToRemove.id +'/delete';
 
-        fetch(url, {
+        await fetch(url, {
             method: "GET",
             headers: { "Content-Type": "application/json; charset=utf-8" }
         })
-        .then(response => {
-            response.json()
-            .then(status => {
-                console.log("Successful "+ status);
-            })
+        .then(res => res.json())
+        .then(item => {
+            console.log(item);
+            if (item.success === true) {
+                this.setState({loading: false});
+                this.handleCloseRemoveCaseModal();
+                window.location.reload();
+            }
         })
-        .then(this.handleCloseRemoveCaseModal())
-        .then(window.location.reload())
     }
 
     handleSubmitUpdate(event) {
-        console.log(this.state.caseToEdit);
-
-        console.log("HANDLE_UPDATE");
         event.preventDefault();
         if (!event.target.checkValidity()) {
             this.setState({ formIsValid: false });
@@ -196,17 +159,12 @@ class ManageCasesLoaded extends Component {
     }
 
 
-    handleCloseAdd() { this.setState({ showAdd: false }); }
-    handleShowAdd() { this.setState({ showAdd: true }); }
-
     handleCloseEdit() { this.setState({ showEdit: false }); }
     handleShowEdit() { this.setState({ showEdit: true }); }
 
     handleCloseDelete() { this.setState({ showDelete: false }); }
     handleShowDelete() { this.setState({ showDelete: true }); }
 
-    handleOpenNewCaseModal () { this.setState({ showNewCaseModal: true }); }  
-    handleCloseNewCaseModal () { this.setState({ showNewCaseModal: false }); }
     handleCloseEditCaseModal () { this.setState({ showEditCaseModal: false }); }
     handleOpenEditCaseModal () { this.setState({ showEditCaseModal: true }); } 
     
@@ -229,15 +187,7 @@ class ManageCasesLoaded extends Component {
     return (
         <div>
             <div className="container pageBody">
-                
-                <Button 
-                    block
-                    onClick={this.handleShowAdd}
-                    size="lg"
-                    variant="primary">
-                    Add New Case
-                </Button>
-                
+
                 <CasesTable 
                     dataCollection={this.state.caseCollection} />  
 
@@ -247,19 +197,6 @@ class ManageCasesLoaded extends Component {
                 onClick={this.downloadAllJson}>
                     Download all JSON
                 </Button>
-
-                <Modal 
-                    show={this.state.showAdd} 
-                    onHide={this.handleCloseAdd}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Add New Case</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                        <NewCaseForm 
-                            hs={this.handleSubmitNewCase} 
-                            hic={this.handleInputChange} />
-                </Modal.Body>
-                </Modal>
 
                 <Modal 
                     show={this.state.showEdit} 
@@ -286,6 +223,12 @@ class ManageCasesLoaded extends Component {
                             hs={this.handleSubmitDelete} 
                             ctd={this.state.caseToRemove} />
                 </Modal.Body>
+                <Modal.Footer>
+                    {<ClipLoader 
+                        loading={this.state.deleteLoading}
+                        size={20}/>
+                    }
+                </Modal.Footer>
                 </Modal>
 
             </div>

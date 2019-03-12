@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {  Button, Nav, Navbar, Form, FormControl } from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -12,6 +12,7 @@ class Header extends Component {
                 <img
                     src="/logo.svg"
                     width="30"
+                    alt="PrecTablisher"
                     height="30"
                     className="d-inline-block align-top"
                 />

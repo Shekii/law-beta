@@ -4,7 +4,6 @@ import * as constants from '../../../static/constants.js';
 
 import SimilarCasesLoaded from './SimilarCasesLoaded';
 import PropaLoader from '../../Propa_Loader';
-import { Table } from 'react-bootstrap';
 
 class SimilarCases extends Component {
 
@@ -52,8 +51,6 @@ class SimilarCases extends Component {
             if (this.state.similerCases != null){
                 this.setState({isLoaded: true});
             }
-
-            let data = this.state.similerCases;
     }
 
   render() {

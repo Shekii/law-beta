@@ -1,24 +1,15 @@
-import React, {Component} from 'react';
-
-// import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
-import * as constants from '../../static/constants.js';
+import React from 'react';
 
 import CaseConcepts from './CaseConcepts';
-import CaseConceptsRow from './CaseConceptsRow';
 
 import CaseCategories from './CaseCategories';
-import CaseCategoryRow from './CaseCategoryRow';
 
 import CaseEmotions from './CaseEmotions';
-import CaseEmotionsRow from './CaseEmotionsRow';
 
 import SimilarCases from './SimilarCases/SimilarCases';
 
-import ErrorMessage from '../ErrorMessage';
-
-import { 
-     Button, 
-     FormGroup, Form, Col, ControlLabel, Row, FormControl, Tabs, Tab } from 'react-bootstrap';
+import {  
+    Form, Col, Row, Tabs, Tab } from 'react-bootstrap';
 
 import '../../css/main.css'; 
 

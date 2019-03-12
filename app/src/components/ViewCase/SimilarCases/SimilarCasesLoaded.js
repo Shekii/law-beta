@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 
-import * as constants from '../../../static/constants.js';
-
 import SimilarCasesRow from './SimilarCasesRow';
 
 import { Table } from 'react-bootstrap';
@@ -35,8 +33,6 @@ class SimilarCasesLoaded extends Component {
             }
         });
         this.setState({ similerCases: tempCollection });
-
-        let data = this.state.similerCases;
     }
 
   render() {

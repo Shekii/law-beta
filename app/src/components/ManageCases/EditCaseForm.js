@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { 
      Button, 
-     FormGroup, Form, Row, Col, FormControl } from 'react-bootstrap';
+     Form } from 'react-bootstrap';
 
 
 class EditCaseForm extends Component { 
@@ -13,7 +13,6 @@ class EditCaseForm extends Component {
     }
 
     render() {
-        const { formIsValid } = true;
         
         return (
             <div>

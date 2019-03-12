@@ -1,10 +1,6 @@
 import React, {Component} from 'react';
 
-import CaseCollection from './CaseCollection';
-
 import * as constants from '../../static/constants.js';
-
-import {  Modal, Button, Table } from 'react-bootstrap';
 
 import CasesLoaded from './ManageCasesLoaded';
 

@@ -3,13 +3,10 @@ import React, {Component} from 'react';
 // import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic'
 import * as constants from '../../static/constants.js'; 
 
-import CaseConcepts from './CaseConcepts';
 import CaseConceptsRow from './CaseConceptsRow';
 
-import CaseCategories from './CaseCategories';
 import CaseCategoryRow from './CaseCategoryRow';
 
-import CaseEmotions from './CaseEmotions';
 import CaseEmotionsRow from './CaseEmotionsRow';
 
 

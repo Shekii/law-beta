@@ -91,12 +91,16 @@ module.exports = {
             if (error) {
                 next(false, error, []);
             } else {
-                if (!results.results[0].caseName == '' &&
-                    !results.results[0].text == '' &&
-                    !results.results[0].caseDate == '') {
-                    next(true, [], results.results);
+                if (results.results.length > 0) {
+                    if (!results.results[0].caseName == '' &&
+                        !results.results[0].text == '' &&
+                        !results.results[0].caseDate == '') {
+                        next(true, [], results.results);
+                    } else {
+                        next(false, "Case retrieved failed.", []);
+                    }
                 } else {
-                    next(false, "Case retrieved failed.", []);
+                        next(false, "Case retrieved failed.", []);
                 }
             }
         });
@@ -231,13 +235,14 @@ module.exports = {
             document_id: req.params.id
         }), 
         function(error, data) {
-            if (error == null) {
-                next(true, []);
-            } else {
+            if (error != null) {
                 next(false, error, []);
+            } else {
+                next(true, "File successfully deleted.");
             }
         };
 
+       next(true, "File successfully deleted.");
     }
 }
 

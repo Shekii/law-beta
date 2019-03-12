@@ -63,7 +63,6 @@ router.get('/cases_discovery/case/(:id)', upload.array(), function(req, res) {
 //Insert new case into discovery collection
 router.post('/cases_discovery/', upload.array(), function (req, res) {
 
-    console.log("adding case into discovery");
     let nu = { 
         caseName: req.body.caseName, 
         caseDate: req.body.caseDate, 
@@ -83,12 +82,10 @@ router.post('/cases_discovery/', upload.array(), function (req, res) {
 router.get('/cases_discovery/(:id)/delete', function(req, res) {
 
     dal_discovery.deleteCaseFromCollection(req, res, function(stat, err) {
-        if (err == null) {
-            return res.json({ success: true });  
-        }
-        else {
-            console.log(err);
-            return res.json({ success: false, error: err});              
+        if (stat === true) {
+            return res.status(200).json({ success: true, message: stat });  
+        } else {
+            return res.status(500).json({ success: false, error: err});              
         }
     });
 });
@@ -115,61 +112,6 @@ router.post('/cases_discovery/:id/edit', upload.array(), function(req, res) {
 });
 
 
-//Add new case
-router.post('/cases/', upload.array(), function (req, res) {
-
-    console.log("adding case");
-    let nu = { 
-        caseName: req.body.caseName, 
-        caseDate: req.body.caseDate, 
-        text: req.body.text, 
-     };
-
-    dal.addNewCase(nu, req, res, function(stat, err) {
-        if (err == null) {
-            return res.json({ success:true });
-        } else {
-            return res.json({ success:false, error:err });
-        }
-    });
-});
-
-
-//Edit case
-router.post('/cases/:id/edit', upload.array(), function(req, res) {
-    let nu = { 
-        id: req.body.id,
-        caseName: req.body.caseName, 
-        caseDate: req.body.caseDate, 
-        text: req.body.text, 
-    };
-
-    dal.updateCaseById(nu, req, res, function(stat, err) {
-
-       if (err == null)
-        {
-          return res.json({ success: true});
-        } 
-        else {
-          return res.json({ success: false, error: err});
-        }
-    });
-});
-
-
-//Delete case
-router.get('/cases/(:id)/delete', function(req, res) {
-
-    dal.deleteById(req, res, function(stat, err) {
-        if (err == null) {
-            return res.json({ success: true });  
-        }
-        else {
-            return res.json({ success: false, error: err});              
-        }
-    });
-
-});
 
 
 module.exports = router;

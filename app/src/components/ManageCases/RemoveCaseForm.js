@@ -8,7 +8,7 @@ class RemoveCaseForm extends Component {
     constructor(props) {
         super(props);
 
-        this.handleSubmit = props.hs;
+        this.handleSubmit = props.hs; 
     }
 
     render() {

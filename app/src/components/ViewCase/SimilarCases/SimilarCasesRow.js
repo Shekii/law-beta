@@ -9,7 +9,9 @@ const SimilarCasesRow = (props) => {
         <tr id="caseRow"> 
             <td>
                 <div>
-                   <a href={url}  target="_blank">
+                   <a href={url} 
+                      target="_blank"
+                      rel="noopener noreferrer">
                      {props.caseName}
                     </a>
                 </div>
@@ -21,7 +23,9 @@ const SimilarCasesRow = (props) => {
                 <div id="caseViewCell">
 						<Button 
 						    href={url}
-						>
+                            target="_blank"
+                            rel="noopener noreferrer">
+						
 						<i className="fa fa-eye"/>
 						</Button>
                 </div>
