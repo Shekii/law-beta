@@ -4,6 +4,8 @@ import SimilarCasesRow from './SimilarCasesRow';
 
 import { Table } from 'react-bootstrap';
 
+import CanvasJSReact from '../../../assets/canvasjs/canvasjs.react';
+
 class SimilarCasesLoaded extends Component {
 
     //SimilarCases
@@ -27,6 +29,7 @@ class SimilarCasesLoaded extends Component {
                     id={it.id}
                     caseName={it.caseName}
                     score={it.score}
+                    number={it.confidence}
                     confidence=
                         {(Math.round(it.confidence *100)).toFixed(2) + "%"}
                 />);
@@ -37,10 +40,46 @@ class SimilarCasesLoaded extends Component {
 
   render() {
         let data = this.state.similerCases;
+        const CanvasJS = CanvasJSReact.CanvasJS;
+        const CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
+		var dataPoint;
+		var total;
+		let options = {
+			animationEnabled: true,
+			title:{
+				text: ""
+			},
+			data: [{
+				type: "funnel",
+				toolTipContent: "<b>{label}</b>: {y} <b>({percentage}%)</b>",
+				indexLabelPlacement: "inside",
+				indexLabel: "{label}({percentage}%)",
+				dataPoints: []
+            }]
+        }
+            
+        this.props.similerCases.forEach(function(it, index) {
+            options.data[0].dataPoints[index] = {
+                y: it.confidence, label: it.caseName
+            }
+        })
+
+		//calculate percentage
+		dataPoint = options.data[0].dataPoints;
+		total = dataPoint[0].y;
+		for(var i = 0; i < dataPoint.length; i++) {
+            options.data[0].dataPoints[i].percentage = (Math.round(dataPoint[i].y *100)).toFixed(2);
+		}
 
     return (
         <div>
             <div className="container">
+
+				<CanvasJSChart options = {options}
+					 onRef={ref => this.chart = ref}
+				/>
+                
                 <div className="table-responsive">
                     <Table 
                     className="table=responsive"
