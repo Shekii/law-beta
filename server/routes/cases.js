@@ -46,6 +46,15 @@ router.get('/cases_discovery/similarCases/(:id)', upload.array(), function(req, 
         
     });
 });
+
+//Find similar cases based on the enriched_text
+router.get('/cases_discovery/search/(:search)', function(req, res) {
+
+    const searchTerm = req.query['search'];
+
+    console.log(searchTerm);
+});
+
 //View case 
 router.get('/cases_discovery/case/(:id)', upload.array(), function(req, res) {
 

@@ -106,6 +106,10 @@ module.exports = {
         });
     },
 
+    searchCasesFromTerm: function(term, req, res, next) {
+        
+    },
+
     getSimilarCasesFromID: function(req, res, next) {
         let queryString = "id::"+req.params.id; 
         let params = {
@@ -186,7 +190,7 @@ module.exports = {
 
 
 
-    editCaseInCollection: function (nu, req, res, next) {
+    editCaseInCollection: function (nu, req, res, next) { 
 
         let editFile = JSON.stringify(nu);
         discovery.updateJsonDocument({ 
@@ -220,7 +224,7 @@ module.exports = {
                 if (err) {
                     next(false, err, []);
                 } else {
-                    next("Success, case inserted into collection.");
+                    next("Success, case inserted into collection."); 
                 }
             });
         }
