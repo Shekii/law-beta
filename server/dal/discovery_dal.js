@@ -202,38 +202,25 @@ module.exports = {
 
     insertCaseIntoCollection: function (nu, req, res, next) {
 
-            //addDocument() doesn't work unless a file is 
-            //created on the server?
-            // discovery.addDocument({ 
+        let document_obj = {
+            environment_id: environmentId,
+            collection_id: collectionId,
+            file: nu
+        }
 
-            //     environment_id: environmentId, 
-            //     collection_id: collectionId,
-            //     file: nu
-            //    },
-
-            //     function(error, data) {
-
-            //         if (error != null) {
-            //             next(false, error, []);
-            //         }
-
-            //         next (true, []);
-
-            //     }
-            // );
-            let document_obj = {
-                environment_id: environmentId,
-                collection_id: collectionId,
-                file: nu
-            }
+        if (nu.caseName === '' || nu.caseDate === '' ||
+            nu.text === '') {
+                next(false, "Missing fields.", []);   
+        } else {
             discovery.addJsonDocument(document_obj, function (err, response) {
-            if (err) {
-                next(false, err, []);
-            } else {
-               next(true, []);
-            }
+                if (err) {
+                    next(false, err, []);
+                } else {
+                    next("Success, case inserted into collection.");
+                }
             });
-       
+        }
+        
     },
 
     deleteCaseFromCollection: function (req, res,next) {

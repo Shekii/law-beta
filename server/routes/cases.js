@@ -71,11 +71,10 @@ router.post('/cases_discovery/', upload.array(), function (req, res) {
      };
 
     dal_discovery.insertCaseIntoCollection(nu, req, res, function(stat, err) {
-        if (err == null) {
-            return res.json({ success:true });
+        if (!err) {
+            return res.status(200).json({ success:true, message: stat  });
         } else {
-            console.log("ERROR:" + err);
-            return res.json({ success:false, error:err });
+            return res.status(500).json({ success:false, message:"Error uploading file." });
         }
     });
 });

@@ -58,56 +58,56 @@ class Case extends Component {
             
             if (this.state.errorMessage === '') {
                 
-                // this.setState({isLoaded: true});
+                this.setState({isLoaded: true});
 
-                // let data = this.state.dataCollection;
+                let data = this.state.dataCollection;
 
-                // if (data.length !== 0) {
+                if (data.length !== 0) {
                     
-                //     let caseConcepts = [];
+                    let caseConcepts = [];
 
-                //     if (typeof (data.enriched_text.concepts) !== undefined) {
-                //         data.enriched_text.concepts.forEach(it => {
-                //             caseConcepts.push(<CaseConceptsRow
-                //                 key={Math.random()}
-                //                 title={it.text}
-                //                 relevance={Math.round(it.relevance * 100)} 
+                    if (typeof (data.enriched_text.concepts) !== undefined) {
+                        data.enriched_text.concepts.forEach(it => {
+                            caseConcepts.push(<CaseConceptsRow
+                                key={Math.random()}
+                                title={it.text}
+                                relevance={Math.round(it.relevance * 100)} 
 
-                //             />);
-                //         });
-                //     }
+                            />);
+                        });
+                    }
                     
-                //     let caseCategories = [];
+                    let caseCategories = [];
 
-                //     if (typeof (data.enriched_text.categories) !== undefined) {
-                //         data.enriched_text.categories.forEach(it => {
-                //             caseCategories.push(<CaseCategoryRow
-                //                 key={Math.random()}
-                //                 label={it.label}
-                //                 score={Math.round(it.score * 100)}
+                    if (typeof (data.enriched_text.categories) !== undefined) {
+                        data.enriched_text.categories.forEach(it => {
+                            caseCategories.push(<CaseCategoryRow
+                                key={Math.random()}
+                                label={it.label}
+                                score={Math.round(it.score * 100)}
 
-                //             />);
-                //         });
-                //     }
+                            />);
+                        });
+                    }
 
-                //     let caseEmotions = [];
+                    let caseEmotions = [];
 
-                //     if (typeof (data.enriched_text.emotions) !== undefined) {
-                //         caseEmotions.push(<CaseEmotionsRow
-                //                 key={Math.random()}
-                //                 disgust={Math.round(data.enriched_text.emotion.document.emotion.disgust*100)}
-                //                 joy={Math.round(data.enriched_text.emotion.document.emotion.joy*100)}
-                //                 anger={Math.round(data.enriched_text.emotion.document.emotion.anger*100)}
-                //                 fear={Math.round(data.enriched_text.emotion.document.emotion.fear*100)}
-                //                 sadness={Math.round(data.enriched_text.emotion.document.emotion.sadness*100)}
+                    if (typeof (data.enriched_text.emotions) !== undefined) {
+                        caseEmotions.push(<CaseEmotionsRow
+                                key={Math.random()}
+                                disgust={Math.round(data.enriched_text.emotion.document.emotion.disgust*100)}
+                                joy={Math.round(data.enriched_text.emotion.document.emotion.joy*100)}
+                                anger={Math.round(data.enriched_text.emotion.document.emotion.anger*100)}
+                                fear={Math.round(data.enriched_text.emotion.document.emotion.fear*100)}
+                                sadness={Math.round(data.enriched_text.emotion.document.emotion.sadness*100)}
 
-                //         />);
-                //     }
+                        />);
+                    }
 
-                //     this.setState ({emotions: caseEmotions});
-                //     this.setState ( {categories: caseCategories});
-                //     this.setState ({concepts: caseConcepts});
-                // }
+                    this.setState ({emotions: caseEmotions});
+                    this.setState ( {categories: caseCategories});
+                    this.setState ({concepts: caseConcepts});
+                }
             }
     }
 

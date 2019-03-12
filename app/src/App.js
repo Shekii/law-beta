@@ -11,6 +11,8 @@ import ManageCases from './components/ManageCases/ManageCases';
 
 import Case from './components/ViewCase/Case';
 
+import Upload from './components/Upload/UploadCase';
+
 import Search from './components/Search/Search';
 
 /* App component */
@@ -24,8 +26,10 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home}/>
             <Route path="/manage" exact component={ManageCases}/>
+            <Route path="/upload" exact component={Upload}/>
             <Route path="/case/:id" exact component={Case}/>
             <Route path="/search" exact component={Search}/>
+
             <Route component={Home}/>
           </Switch>
         
