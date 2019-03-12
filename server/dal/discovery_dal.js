@@ -62,7 +62,10 @@ module.exports = {
             if (error) {
                 next(false, err, []);
             } else {
-                next(true, [], results.results);
+                if (!results.results[0].caseName !== '')
+                    next(true, [], results.results);
+                else 
+                    next(false, "Case empty.", []);
             }
         });
 
@@ -86,10 +89,15 @@ module.exports = {
         }
         discovery.query(params, (error, results) => {
             if (error) {
-                next(false, err, []);
+                next(false, error, []);
             } else {
-                console.log(results.results); //your query results
-                next(true, [], results.results);
+                if (!results.results[0].caseName == '' &&
+                    !results.results[0].text == '' &&
+                    !results.results[0].caseDate == '') {
+                    next(true, [], results.results);
+                } else {
+                    next(false, "Case retrieved failed.", []);
+                }
             }
         });
     },
@@ -101,7 +109,7 @@ module.exports = {
             'environment_id':environmentId,
             'collection_id': collectionId,
             'configuration_id': configurationId,
-            return: 'enriched_text'
+            return: 'enriched_text, caseName, caseDate, text'
         }
 
         let filterStrArrConcepts = [];
@@ -116,51 +124,57 @@ module.exports = {
                 console.log(error);
                 next(false, error, []);
             } else {
-                let conceptSize = 
-                    results.results[0].enriched_text.concepts.length;
-                let categorySize = 
-                    results.results[0].enriched_text.categories.length;
 
-                for (let i = 0; i < conceptSize; i++) {
-                    concepts[i] = { 
-                        text: results.results[0].enriched_text.concepts[i].text,
-                        relevance: results.results[0].enriched_text.concepts[i].relevance
-                     };
+                    console.log (results.results[0]);
+                if (results.results[0].caseName != '' &&
+                    results.results[0].caseDate != '' &&
+                    results.results[0].text != '') {
 
-                    filterStrArrConcepts[i] = FILTER_CONCEPT + concepts[i].text;
-                }
+                    let conceptSize = 
+                        results.results[0].enriched_text.concepts.length;
+                    let categorySize = 
+                        results.results[0].enriched_text.categories.length;
 
-                for (let j = 0;  j < categorySize; j++) {
-                    categories[j] = { 
-                        label: results.results[0].enriched_text.categories[j].label,
-                        score: results.results[0].enriched_text.concepts[j].score
-                     };
+                    for (let i = 0; i < conceptSize; i++) {
+                        concepts[i] = { 
+                            text: results.results[0].enriched_text.concepts[i].text,
+                            relevance: results.results[0].enriched_text.concepts[i].relevance
+                        };
 
-                    filterStrArrCategories[j] =
-                                     FILTER_CATEGORY + categories[j].label;
-                }
-
-                let filterStrArr =
-                 filterStrArrConcepts.concat(filterStrArrCategories);
-            
-                filterStr = filterStrArr.join("|");
-                console.log(filterStr);
-                let paramsConceptFilter = {
-                    'query': filterStr,
-                    'environment_id':environmentId,
-                    'collection_id': collectionId,
-                    'configuration_id': configurationId,
-                    return: 'id, caseName'
-                    //data.enriched_text.concepts.forEach(it => {
-                }
-                discovery.query(paramsConceptFilter, (error, results) => {
-                    if (error) {
-                        next(false, error, []);
-                    } else {
-                        console.log(results.results);
-                        next(true, [], results.results);
+                        filterStrArrConcepts[i] = FILTER_CONCEPT + concepts[i].text;
                     }
-                });
+
+                    for (let j = 0;  j < categorySize; j++) {
+                        categories[j] = { 
+                            label: results.results[0].enriched_text.categories[j].label,
+                            score: results.results[0].enriched_text.categories[j].score
+                        };
+
+                        filterStrArrCategories[j] =
+                                        FILTER_CATEGORY + categories[j].label;
+                    }
+
+                    let filterStrArr =
+                    filterStrArrConcepts.concat(filterStrArrCategories);
+                
+                    filterStr = filterStrArr.join("|");
+                    let paramsConceptFilter = {
+                        'query': filterStr,
+                        'environment_id':environmentId,
+                        'collection_id': collectionId,
+                        'configuration_id': configurationId,
+                        return: 'id, caseName'
+                    }
+                    discovery.query(paramsConceptFilter, (error, results) => {
+                        if (error) {
+                            next(false, error, []);
+                        } else {
+                            next(true, [], results.results);
+                        }
+                    });
+                } else {
+                        next(false, "Case has missing fields.", []);
+                }
             }
         });
 

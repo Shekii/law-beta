@@ -41,6 +41,7 @@ class SimilarCasesLoaded extends Component {
 
   render() {
         let data = this.state.similerCases;
+
     return (
         <div>
             <div className="container">

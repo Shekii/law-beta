@@ -36,13 +36,11 @@ router.get('/cases_discovery/similarCases/(:id)', upload.array(), function(req, 
 
     dal_discovery.getSimilarCasesFromID(req, res, function(stat, err, data) {
 
-        if (err != null) {
-            //console.log(data);
-            //console.log(data.caseName);
-            //console.log(data);
-            return res.json({ success: true, data: data });
+        if (err != null && stat !== false) {
+            return res.status(200).json({ success: true, data: data });
         } else {
-            return res.json({ success: false });
+            console.log(err);
+            return res.status(404).json({ success: false, error: err });
            
         }
         
@@ -53,13 +51,10 @@ router.get('/cases_discovery/case/(:id)', upload.array(), function(req, res) {
 
     dal_discovery.getCaseFromCollection(req, res, function(stat, err, data) {
 
-        if (err != null) {
-            //console.log(data);
-            //console.log(data.caseName);
-            return res.json({ success: true, data: data });
+        if (err !== null && stat !== false) {
+            return res.status(200).json({ success: true, data: data });
         } else {
-            return res.json({ success: false });
-           
+            return res.status(404).json({ success: false, error: err });
         }
     });
 });

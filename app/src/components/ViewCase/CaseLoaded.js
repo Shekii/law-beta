@@ -31,6 +31,7 @@ const CaseLoaded = (props) => {
                         <Form.Group controlId="formHorizontalCaseName">
                             <Form.Label><strong>Case Name</strong></Form.Label>
                             <Form.Control type="text"
+                                        readOnly
                                         defaultValue={props.case.caseName}/>
                         </Form.Group>
                     </Col>
@@ -38,13 +39,15 @@ const CaseLoaded = (props) => {
                         <Form.Group controlId="formHorizontalCaseDate">
                             <Form.Label><strong>Case Date</strong></Form.Label>
                             <Form.Control type="text"
-                                        defaultValue={props.case.caseDate}/>
+                                          readOnly
+                                          defaultValue={props.case.caseDate}/>
                         </Form.Group>
                     </Col>
                 </Row>
                 <Form.Group controlId="formHorizontalCaseText">
                     <Form.Control as="textarea"
                                     rows="3"
+                                    readOnly
                                     defaultValue={props.case.text}/>
                 </Form.Group>
             </Form>
@@ -65,6 +68,7 @@ const CaseLoaded = (props) => {
 
                 <h4>Similar Cases</h4>
                 <SimilarCases case={props.case}/>
+
             </div>
             </div>
 

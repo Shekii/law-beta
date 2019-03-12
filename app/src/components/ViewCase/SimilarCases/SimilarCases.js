@@ -27,6 +27,8 @@ class SimilarCases extends Component {
             .then(res => res.json())
             .then(item => {
 
+                console.log(item);
+
                  item.data.forEach(function (it, index) {
                      if (index > 0 && it.result_metadata.score > 0) {
                          //if not most relevant, i.e itself

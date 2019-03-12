@@ -28,6 +28,7 @@ class Case extends Component {
         this.state = {
              dataCollection:[],
              isLoaded: false,
+             errorMessage: '',
              concepts:[],
              categories:[],
              emotions:[]
@@ -41,68 +42,73 @@ class Case extends Component {
         await fetch(constants.API + fetchURL)
             .then(res => res.json())
             .then(item => {
-                tempCollection.push(item);
-                this.setState({ 
-                    dataCollection: tempCollection[0].data[0]
-                });
+                console.log(item);
+                if (item.error) {
+                    this.setState ({ errorMessage: item.error});
+                } else {
+                    tempCollection.push(item);
+                    this.setState({ 
+                        dataCollection: tempCollection[0].data[0]
+                    });
+                }
             })
             .catch((error) => {
                 console.error(error);
             });
             
-            if (this.state.dataCollection != null) {
+            if (this.state.errorMessage === '') {
                 
-                this.setState({isLoaded: true});
+                // this.setState({isLoaded: true});
 
-                let data = this.state.dataCollection;
+                // let data = this.state.dataCollection;
 
-                let caseConcepts = [];
+                // if (data.length !== 0) {
+                    
+                //     let caseConcepts = [];
 
-                if (typeof data.enriched_text.concepts !== undefined) {
-                    data.enriched_text.concepts.forEach(it => {
-                        caseConcepts.push(<CaseConceptsRow
-                            key={Math.random()}
-                            title={it.text}
-                            relevance={Math.round(it.relevance * 100)} 
+                //     if (typeof (data.enriched_text.concepts) !== undefined) {
+                //         data.enriched_text.concepts.forEach(it => {
+                //             caseConcepts.push(<CaseConceptsRow
+                //                 key={Math.random()}
+                //                 title={it.text}
+                //                 relevance={Math.round(it.relevance * 100)} 
 
-                        />);
-                    });
-                }
-                
-                let caseCategories = [];
+                //             />);
+                //         });
+                //     }
+                    
+                //     let caseCategories = [];
 
-                if (data.enriched_text.caseCategories !== null) {
-                    data.enriched_text.categories.forEach(it => {
-                        caseCategories.push(<CaseCategoryRow
-                            key={Math.random()}
-                            label={it.label}
-                            score={Math.round(it.score * 100)}
+                //     if (typeof (data.enriched_text.categories) !== undefined) {
+                //         data.enriched_text.categories.forEach(it => {
+                //             caseCategories.push(<CaseCategoryRow
+                //                 key={Math.random()}
+                //                 label={it.label}
+                //                 score={Math.round(it.score * 100)}
 
-                        />);
-                    });
-                }
+                //             />);
+                //         });
+                //     }
 
-                let caseEmotions = [];
+                //     let caseEmotions = [];
 
-                if (data.enriched_text.caseEmotions !== null) {
-                    caseEmotions.push(<CaseEmotionsRow
-                            key={Math.random()}
-                            disgust={Math.round(data.enriched_text.emotion.document.emotion.disgust*100)}
-                            joy={Math.round(data.enriched_text.emotion.document.emotion.joy*100)}
-                            anger={Math.round(data.enriched_text.emotion.document.emotion.anger*100)}
-                            fear={Math.round(data.enriched_text.emotion.document.emotion.fear*100)}
-                            sadness={Math.round(data.enriched_text.emotion.document.emotion.sadness*100)}
+                //     if (typeof (data.enriched_text.emotions) !== undefined) {
+                //         caseEmotions.push(<CaseEmotionsRow
+                //                 key={Math.random()}
+                //                 disgust={Math.round(data.enriched_text.emotion.document.emotion.disgust*100)}
+                //                 joy={Math.round(data.enriched_text.emotion.document.emotion.joy*100)}
+                //                 anger={Math.round(data.enriched_text.emotion.document.emotion.anger*100)}
+                //                 fear={Math.round(data.enriched_text.emotion.document.emotion.fear*100)}
+                //                 sadness={Math.round(data.enriched_text.emotion.document.emotion.sadness*100)}
 
-                    />);
-                }
+                //         />);
+                //     }
 
-
-                this.setState ({emotions: caseEmotions});
-                this.setState ( {categories: caseCategories});
-                this.setState ({concepts: caseConcepts});
+                //     this.setState ({emotions: caseEmotions});
+                //     this.setState ( {categories: caseCategories});
+                //     this.setState ({concepts: caseConcepts});
+                // }
             }
-
-
     }
 
   render() {
@@ -124,6 +130,11 @@ class Case extends Component {
                 
                 {/* <BreadcrumbsItem to='#'>Case Analysis</BreadcrumbsItem> */}
                 
+                {this.state.errorMessage.length > 0 &&
+                <ErrorMessage 
+                    error={this.state.errorMessage}/>
+                }
+
                 {viewCase}
 
             </div>
