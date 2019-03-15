@@ -45,10 +45,12 @@ class Home extends Component {
             <div className="container h-100">
               <div className="row h-100 align-items-center">
                 <div className="col-12 text-center">
-                  <img src="/logo.svg" height="200px"/>
-                  <h1 className="font-weight-light"><strong>PrecTablisher</strong></h1>
+                  {/* <img src="/logo.svg" height="150px"/> */}
+                  <h1 className="font-weight-light display-1"><strong>PrecTablisher</strong></h1>
                   <p className="lead">The Digital Legal Aid</p>
-                  <Button bsstyle="primary" href="/manage">Manage Cases</Button>
+                  <Button bsstyle="primary" href="/manage">
+                    Get Started
+                  </Button>
                 </div>
               </div>
             </div>
