@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Home from './components/Home/Home.js';
-import Home1 from './components/Home/Home1.js';
 
 import Header from './components/Header/Header.js';
 import Footer from './components/Footer/Footer.js';
@@ -16,22 +15,26 @@ import Upload from './components/Upload/UploadCase';
 
 import Search from './components/Search/Search';
 
+import Statistics from './components/Statistics/Statistics'
+
+import './css/style4.css';
+
 /* App component */
 class App extends Component {
   render() {
     return (
       <div>
         
-         <Header/>
+          <Header/> 
 
           <Switch>
             <Route exact path="/" component={Home}/>
             <Route path="/manage" exact component={ManageCases}/>
-            <Route path="/home1" exact component={Home1}/>
             <Route path="/upload" exact component={Upload}/>
             <Route path="/case/:id" exact component={Case}/>
             <Route path="/search" exact component={Search}/>
             <Route path="/search/:text" exact component={Search}/>
+            <Route path="/stats" exact component={Statistics}/>
 
             <Route component={Home}/>
           </Switch>

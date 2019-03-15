@@ -125,8 +125,6 @@ class Case extends Component {
         <div>
             <div className="container pageBody">
                 
-                {/* <BreadcrumbsItem to='#'>Case Analysis</BreadcrumbsItem> */}
-                
                 {this.state.errorMessage.length > 0 &&
                 <ErrorMessage 
                     error={this.state.errorMessage}/>

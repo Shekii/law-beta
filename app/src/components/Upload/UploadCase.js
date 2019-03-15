@@ -6,6 +6,8 @@ import ClipLoader from '../Clip_Loader.js';
 import SuccessMessage from '../SuccessMessage';
 import ErrorMessage from '../ErrorMessage';
 
+import '../../css/main.css';
+
 import { 
      Button, Form, Col} from 'react-bootstrap';
 
@@ -76,38 +78,6 @@ class UploadCase extends Component {
     }
   }
 
-    async handleSubmitNewCase(event) {
-      event.preventDefault();
-
-      const form = event.currentTarget;
-      if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-      } else {
-          this.setState({ formIsValid: true });
-
-          let nu = {
-              caseName:this.state.caseName,
-              caseDate:this.state.caseDate,
-              text:this.state.text,
-          };
-          fetch(constants.API + '/cases_discovery', {
-              method: "POST",
-              body:JSON.stringify(nu),
-              headers: { "Content-Type": "application/json; charset=utf-8" }
-          })
-          .then(response => {
-              response.json()
-              .then(status => {
-                  console.log("Successful "+ status);
-              })
-          })
-          .then(this.handleCloseNewCaseModal())
-          .then(window.location.reload());
-      }
-
-  }
-
   render() {
     const { validated } = this.state;
 
@@ -125,7 +95,7 @@ class UploadCase extends Component {
 
     return (
       <div className="container pageBody">
-        <h3 className="display-4">Upload New Case</h3><br></br>
+        <h1>Upload New Case</h1><br></br>
 
         {result}
 

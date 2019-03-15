@@ -63,7 +63,7 @@ class SimilarCases extends Component {
         }
     return (
         <div>
-            <div className="container">
+            <div className="container-fluid">
                 {viewCases}
             </div>
     </div>

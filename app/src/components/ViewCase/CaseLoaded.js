@@ -6,62 +6,87 @@ import CaseCategories from './CaseCategories';
 
 import CaseEmotions from './CaseEmotions';
 
+import CaseInfo from './CaseInfo';
+
+import HelpInfo from './HelpInfo'; 
+
 import SimilarCases from './SimilarCases/SimilarCases';
 
 import {  
-    Form, Col, Row, Tabs, Tab } from 'react-bootstrap';
+    Form, Col, Row, Tabs, Tab, Nav, Badge, Button } from 'react-bootstrap';
 
 import '../../css/main.css'; 
 
 const CaseLoaded = (props) => {
+    let conceptsSize =  props.concepts.length;
+    let categoriesSize = props.categories.length;
     return (
         <div>
-            <Form>
-                <Row>
-                    <Col>
-                        <Form.Group controlId="formHorizontalCaseName">
-                            <Form.Label><strong>Case Name</strong></Form.Label>
-                            <Form.Control type="text"
-                                        readOnly
-                                        defaultValue={props.case.caseName}/>
-                        </Form.Group>
-                    </Col>
-                    <Col>
-                        <Form.Group controlId="formHorizontalCaseDate">
-                            <Form.Label><strong>Case Date</strong></Form.Label>
-                            <Form.Control type="text"
-                                          readOnly
-                                          defaultValue={props.case.caseDate}/>
-                        </Form.Group>
-                    </Col>
-                </Row>
-                <Form.Group controlId="formHorizontalCaseText">
-                    <Form.Control as="textarea"
-                                    rows="3"
-                                    readOnly
-                                    defaultValue={props.case.text}/>
-                </Form.Group>
-            </Form>
+
+            <h4 className="display-4">
+                Case Analysis Report<br></br>
+            </h4>
+            <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+            <Row>
+                <Col sm={3}>
+                    <Nav variant="pills" className="flex-column">
+                        <Nav.Item>
+                            <Nav.Link eventKey="first">Case Details <span className="fa fa-info-circle"/></Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link eventKey="second">
+                                Concepts  <span></span>
+                                <Badge pill variant="warning">
+                                    {conceptsSize > 0 &&
+                                        conceptsSize
+                                    }
+                                </Badge>
+                            </Nav.Link>
+                        </Nav.Item>
+                    <Nav.Item>
+                            <Nav.Link eventKey="third">
+                                Categories <span></span>
+                                <Badge pill variant="warning">
+                                    {categoriesSize > 0 &&
+                                        categoriesSize
+                                    }
+                                </Badge>
+                            </Nav.Link> 
+                        </Nav.Item>
+                    <Nav.Item>
+                            <Nav.Link eventKey="fourth">Emotions <span className="fa fa-smile-o"/></Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link eventKey="fifth">Help <span className="fa fa-question-circle"/></Nav.Link>
+                        </Nav.Item>
+                    </Nav>
+                </Col>
+                <Col sm={9}>
+                    <Tab.Content>
+                        <Tab.Pane eventKey="first">
+                            <CaseInfo case={props.case}/>
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="second">
+                            <CaseConcepts concepts={props.concepts}/>
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="third">
+                            <CaseCategories categories={props.categories}/>
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="fourth">
+                            <CaseEmotions emotions={props.emotions}/>
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="fifth">
+                            <HelpInfo case={props.case}/>
+                        </Tab.Pane>
+                    </Tab.Content>
+                </Col>
+            </Row>
+            </Tab.Container>
 
             <div className="container">
-                <h2>Case analysis</h2>
-                <Tabs defaultActiveKey="profile" id="caseTabs">
-                    <Tab eventKey="home" title="Concepts" className="caseTab">
-                        <CaseConcepts concepts={props.concepts}/>
-                    </Tab>
-                    <Tab eventKey="profile" title="Categories" className="caseTab">
-                        <CaseCategories categories={props.categories}/>
-                    </Tab>
-                    <Tab eventKey="contact" title="Emotions" className="caseTab">
-                        <CaseEmotions emotions={props.emotions}/> 
-                    </Tab>
-                </Tabs>
-
-                <h4>Similar Cases</h4>
                 <SimilarCases case={props.case}/>
-
             </div>
-            </div>
+    </div>
 
     );
 }

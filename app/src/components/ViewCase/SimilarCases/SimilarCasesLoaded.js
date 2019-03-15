@@ -82,28 +82,13 @@ class SimilarCasesLoaded extends Component {
 
     return (
         <div>
-            <div className="container">
+            <div className="container-fluid" style={{ marginTop: '25px' }}>
  
+                <h4>Similar Cases</h4>
 				<CanvasJSChart options = {options}
 					 onRef={ref => this.chart = ref}
 				/>  
-                
-                {/* <div className="table-responsive">
-                    <Table 
-                        className="table=responsive"
-                        striped bordered hover>
-                    <thead className="thead-light">
-                        <tr>
-                            <th id="CaseName">Case Name</th>
-                            <th id="Similarity">Relevance</th>
-                            <th id="caseView"></th>
-                        </tr>
-                    </thead>
-                    <tbody> 
-                        {data}
-                    </tbody>
-                </Table>
-                </div> */}
+
             </div>
     </div>
     );

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Nav, Navbar } from 'react-bootstrap';
+import { Nav, Navbar, NavItem, NavDropdown } from 'react-bootstrap';
 
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -7,7 +7,12 @@ class Header extends Component {
   render() {
     return (
         <div>
-            <Navbar bg="dark" variant="dark" fixed="top">
+             <Navbar 
+                bg="dark" 
+                variant="dark" 
+                fixed="top"
+                inverse="true"
+                collapseOnSelect >
                 <Navbar.Brand href="/">
                 <img
                     src="/logo.svg"
@@ -18,7 +23,7 @@ class Header extends Component {
                 />
                 {' PrecTablisher'}
                 </Navbar.Brand>
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Toggle />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
                         <LinkContainer to="/manage">
@@ -43,7 +48,33 @@ class Header extends Component {
                         </LinkContainer>
                     </Nav>
                 </Navbar.Collapse>
-            </Navbar>
+            </Navbar> 
+{/* <Navbar inverse collapseOnSelect>
+  <Navbar.Header>
+    <Navbar.Brand>
+      <a href="#brand">React-Bootstrap</a>
+    </Navbar.Brand>
+    <Navbar.Toggle />
+  </Navbar.Header>
+  <Navbar.Collapse>
+    <Nav>
+      <NavItem eventKey={1} href="#">
+        Link
+      </NavItem>
+      <NavItem eventKey={2} href="#">
+        Link
+      </NavItem>
+    </Nav>
+    <Nav pullRight>
+      <NavItem eventKey={1} href="#">
+        Link Right
+      </NavItem>
+      <NavItem eventKey={2} href="#">
+        Link Right
+      </NavItem>
+    </Nav>
+  </Navbar.Collapse>
+</Navbar> */}
   
         </div>
     )
