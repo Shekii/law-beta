@@ -29,6 +29,7 @@ class App extends Component {
             <Route path="/upload" exact component={Upload}/>
             <Route path="/case/:id" exact component={Case}/>
             <Route path="/search" exact component={Search}/>
+            <Route path="/search/:text" exact component={Search}/>
 
             <Route component={Home}/>
           </Switch>

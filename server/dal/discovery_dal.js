@@ -106,8 +106,33 @@ module.exports = {
         });
     },
 
-    searchCasesFromTerm: function(term, req, res, next) {
-        
+    searchCasesFromTerm: function(req, res, next) {
+        let searchTerm = req.params.text;
+        let params = {
+            'query': searchTerm,
+            'environment_id':environmentId,
+            'collection_id': collectionId,
+            'configuration_id': configurationId,
+            return: 'results, caseName'
+        }
+
+        if (searchTerm.trim() === '' || searchTerm === undefined) {
+            next(false, "Nothing to search.", []);
+        } else {
+            discovery.query(params, (error, results) => {
+                if (error) {
+                    console.log(error);
+                    next(false, error, []);
+                } else {
+                    next(true, [], results);
+                }
+            }); 
+        }
+
+
+        //next (success, err, results)
+
+        // next(true, [], searchTerm);
     },
 
     getSimilarCasesFromID: function(req, res, next) {

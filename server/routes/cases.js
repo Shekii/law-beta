@@ -13,6 +13,7 @@ const ObjectId = require('mongodb').ObjectID;
 const url = 'mongodb://localhost:27017';
 const dbName = 'database';
 const client = new MongoClient(url);
+const qs = require('querystring');  
 
 //Routes and business layer. 
 
@@ -48,18 +49,22 @@ router.get('/cases_discovery/similarCases/(:id)', upload.array(), function(req, 
 });
 
 //Find similar cases based on the enriched_text
-router.get('/cases_discovery/search/(:search)', function(req, res) {
+router.get('/cases_discovery/search/(:text)', upload.array(), function(req, res) {
 
-    const searchTerm = req.query['search'];
+    dal_discovery.searchCasesFromTerm(req, res, function(stat, err, data) {
+        if (stat === true) {
+            return res.status(200).json ( { success: true, results: data});
+        } else {
+            return res.status(404).json ( { success: false, message: err});
+        }
+    }); 
 
-    console.log(searchTerm);
 });
 
 //View case 
 router.get('/cases_discovery/case/(:id)', upload.array(), function(req, res) {
 
     dal_discovery.getCaseFromCollection(req, res, function(stat, err, data) {
-
         if (err !== null && stat !== false) {
             return res.status(200).json({ success: true, data: data });
         } else {
