@@ -60,12 +60,17 @@ class ManageCasesLoaded extends Component {
         const tempCollection = [];
 
         this.props.dataCollection.forEach(it => {
+            let concept = '';
+            if (it.enriched_text.concepts.length > 0) {
+                concept = it.enriched_text.concepts[0].text;
+            }
             tempCollection.push(<CaseCollection
                 key={it.id}
                 id={it.id}
                 caseName={it.caseName}
                 caseDate={it.caseDate}
                 text={it.text}
+                concept={concept}
                 ec={this.editCase}
                 dc={this.removeCase}
                 vc={this.viewCase}

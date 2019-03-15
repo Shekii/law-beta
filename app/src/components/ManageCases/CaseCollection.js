@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button } from 'react-bootstrap'
+import {Button, Badge } from 'react-bootstrap'
 
 
 const CaseCollection = (props) => {
@@ -21,7 +21,12 @@ const CaseCollection = (props) => {
     return (
         <tr id="caseRow"> 
             <td>
-                <div id="caseNameCell">{props.caseName}</div>
+                <div id="caseNameCell">
+                    {props.caseName} <span></span>
+                        <Badge pill variant="info">
+                            {props.concept}
+                        </Badge>
+                </div>
             </td>
             <td>
                 <div id="caseDateCell">{props.caseDate}</div>

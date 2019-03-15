@@ -126,7 +126,7 @@ class Search extends Component {
                             <Form.Control 
                                         type="text"
                                         required
-                                        onKeyUp={this.handleSearch}
+                                        //onKeyUp={this.handleSearch}
                                         name="text"
                                         onChange={this.handleInputChange} />
                             <Form.Control.Feedback type="invalid">

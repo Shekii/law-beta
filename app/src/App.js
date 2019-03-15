@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Home from './components/Home/Home.js';
+import Home1 from './components/Home/Home1.js';
 
 import Header from './components/Header/Header.js';
 import Footer from './components/Footer/Footer.js';
@@ -26,6 +27,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home}/>
             <Route path="/manage" exact component={ManageCases}/>
+            <Route path="/home1" exact component={Home1}/>
             <Route path="/upload" exact component={Upload}/>
             <Route path="/case/:id" exact component={Case}/>
             <Route path="/search" exact component={Search}/>

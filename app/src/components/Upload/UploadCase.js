@@ -173,7 +173,7 @@ class UploadCase extends Component {
                 value={this.state.text}
                 onChange={this.handleInputChange}
                 as="textarea"
-                rows="3"
+                rows="7"
                 placeholder="Some text"
               />
               <Form.Control.Feedback type="valid">Looks good!</Form.Control.Feedback>
