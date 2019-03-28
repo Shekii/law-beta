@@ -8,11 +8,13 @@ const CaseCatergoryRow = (props) => {
         score:props.score
     }
 
+    const categoryURL = "/find/category" + data.label;
+
     return (
         <tr id="caseRow"> 
             <td>
                 <div>
-                   <a href="#">
+                   <a href={categoryURL} className="link">
                      {data.label}
                     </a>
                 </div>

@@ -16,16 +16,23 @@ const CaseCollection = (props) => {
     let removeCase = props.dc;
 	let boundRemoveCase = removeCase.bind(this, ac);
 	
-	let viewURL = "/case/" + ac.id;
+    const viewURL = "/case/" + ac.id;
+    const conceptURL = "/find/concept/" + props.concept;
 
     return (
         <tr id="caseRow"> 
             <td>
                 <div id="caseNameCell">
-                    {props.caseName} <span></span>
-                        <Badge pill variant="info">
+                    <a
+                        href={viewURL} 
+                        className="link">
+                        {props.caseName}
+                    </a>
+                    <a href={conceptURL} style={{marginLeft:'10px'}}>
+                        <Badge pill variant="success">
                             {props.concept}
                         </Badge>
+                    </a>
                 </div>
             </td>
             <td>
@@ -34,8 +41,8 @@ const CaseCollection = (props) => {
             <td id="caseEditCell"> 
                 <div>
 						<Button id="controlButton" 
-						onClick={boundEditCase}
-                        variant="outline-primary"
+						    onClick={boundEditCase}
+                            variant="outline-primary"
 						>
                         <i className="fa fa-edit"/>
 						</Button>
@@ -54,8 +61,8 @@ const CaseCollection = (props) => {
             <td>
                 <div id="caseViewCell">
 						<Button 
-                        variant="outline-info"
-						href={viewURL}
+                            variant="outline-info"
+						    href={viewURL}
 						>
                         <i className="fa fa-eye"/>
 						</Button>

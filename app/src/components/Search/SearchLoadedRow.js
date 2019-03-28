@@ -1,5 +1,5 @@
 import React from 'react';
-//import {Button, Glyphicon } from 'react-bootstrap'
+import {Button } from 'react-bootstrap'
 
 
 const SearchLoadedRow = (props) => {
@@ -10,7 +10,7 @@ const SearchLoadedRow = (props) => {
             <td>
                 <div>
                    <a href={URL}>
-                     {props.caseName}
+                     {props.caseName} 
                     </a>
                 </div>
             </td>

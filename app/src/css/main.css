@@ -7,6 +7,9 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+.link {
+    color: #007bff;
+}
 /* #caseRow {
     margin-bottom: 1px solid black;
 }
@@ -65,7 +68,7 @@
 } */
 
 .pageBody {
-    margin-top: 80px;
+     margin-top: 15px; 
 }
 
 #statistics {
@@ -90,7 +93,7 @@ html {
 }
 
 #header {
-    margin-bottom: 60px;
+     margin-bottom: 0; 
 }
 
 .formViewCase {
@@ -100,7 +103,7 @@ html {
     display:block;
 }
 .pageBodyHome {
-    margin-top: 55px;
+    /* margin-top: 55px; */
 }
 
 #caseTabs {

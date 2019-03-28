@@ -15,6 +15,10 @@ import Upload from './components/Upload/UploadCase';
 
 import Search from './components/Search/Search';
 
+import Find from './components/Find/FindAttr';
+
+import Help from './components/Help/Help';
+
 import Statistics from './components/Statistics/Statistics'
 
 import './css/style4.css';
@@ -34,7 +38,17 @@ class App extends Component {
             <Route path="/case/:id" exact component={Case}/>
             <Route path="/search" exact component={Search}/>
             <Route path="/search/:text" exact component={Search}/>
+
+            <Route path="/find/concept/:text" 
+                    render={(props) => <Find {...props} type={"concept"} />}
+              />
+
+            <Route path="/find/category/:text" 
+                  render={(props) => <Find {...props} type={"category"} />}
+                  />
+
             <Route path="/stats" exact component={Statistics}/>
+            <Route path="/help" exact component={Help}/>
 
             <Route component={Home}/>
           </Switch>

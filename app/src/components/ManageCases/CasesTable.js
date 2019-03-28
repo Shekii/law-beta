@@ -9,7 +9,6 @@ const CasesTable = (props) => {
     return (
         <div>
         <div className="container-fluid">
-        <h4 className="display-4">Manage Cases</h4>
 
                 <Table  
                     responsive

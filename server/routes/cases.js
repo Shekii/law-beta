@@ -3,16 +3,8 @@ var router = express.Router();
 var multer = require('multer');
 var upload = multer();
 
-var dal = require('../dal/dal'); 
-
 var dal_discovery = require('../dal/discovery_dal');
 
-const MongoClient = require('mongodb').MongoClient;
-const ObjectId = require('mongodb').ObjectID;
-
-const url = 'mongodb://localhost:27017';
-const dbName = 'database';
-const client = new MongoClient(url);
 const qs = require('querystring');  
 
 //Routes and business layer. 
@@ -48,8 +40,33 @@ router.get('/cases_discovery/similarCases/(:id)', upload.array(), function(req, 
     });
 });
 
-//Find similar cases based on the enriched_text
-router.get('/cases_discovery/search/(:text)', upload.array(), function(req, res) {
+//Find similar cases based on natural language
+router.get('/cases_discovery/search/text/(:text)', upload.array(), function(req, res) {
+
+    dal_discovery.searchCasesFromTerm(req, res, function(stat, err, data) {
+        if (stat === true) {
+            return res.status(200).json ( { success: true, results: data});
+        } else {
+            return res.status(404).json ( { success: false, message: err});
+        }
+    }); 
+
+});
+
+//Find similar cases based on the enriched_text.concept
+router.get('/cases_discovery/search/concept/(:text)', upload.array(), function(req, res) {
+
+    dal_discovery.searchCasesFromTerm(req, res, function(stat, err, data) {
+        if (stat === true) {
+            return res.status(200).json ( { success: true, results: data});
+        } else {
+            return res.status(404).json ( { success: false, message: err});
+        }
+    }); 
+});
+
+//Find similar cases based on the enriched_text.category
+router.get('/cases_discovery/search/category/(:text)', upload.array(), function(req, res) {
 
     dal_discovery.searchCasesFromTerm(req, res, function(stat, err, data) {
         if (stat === true) {
@@ -84,10 +101,12 @@ router.post('/cases_discovery/', upload.array(), function (req, res) {
      };
 
     dal_discovery.insertCaseIntoCollection(nu, req, res, function(stat, err) {
+
+        //console.log("RES: "+stat);
         if (!err) {
-            return res.status(200).json({ success:true, message: stat  });
+            return res.status(200).json({ success:true, message: "Success. Case inserted."  });
         } else {
-            return res.status(500).json({ success:false, message:"Error uploading file." });
+            return res.status(500).json({ success:false, message:err});
         }
     });
 });

@@ -45,7 +45,7 @@ class Search extends Component {
 
             this.setState ({loading : true});
 
-            let fetchURL = '/cases_discovery/search/' + this.state.text;
+            let fetchURL = '/cases_discovery/search/text/' + this.state.text;
             await fetch(constants.API + fetchURL)
                 .then(res => res.json())
                 .then(item => {

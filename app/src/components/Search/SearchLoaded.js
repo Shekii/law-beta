@@ -21,7 +21,7 @@ const SearchLoaded = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                 {props.results}
+                     {props.results}
                 </tbody>
             </Table>
         </div>

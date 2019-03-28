@@ -8,11 +8,13 @@ const CaseConceptsRow = (props) => {
         relevance:props.relevance,
     }
 
+    const conceptURL = "/find/concept/" + concept.title;
+
     return (
         <tr id="caseRow"> 
             <td>
                 <div>
-                   <a href="#">
+                   <a href={conceptURL} className="link">
                         {concept.title}
                     </a>
                 </div>

@@ -128,11 +128,62 @@ module.exports = {
                 }
             }); 
         }
+    },
 
+    searchCasesFromConcept: function(req, res, next) {
+        const concept = req.params.text;
 
-        //next (success, err, results)
+        const filterStr = "enriched_text.concepts.text:" + concept;
 
-        // next(true, [], searchTerm);
+        const paramsConceptFilter = {
+            'query': filterStr,
+            'environment_id':environmentId,
+            'collection_id': collectionId,
+            'configuration_id': configurationId,
+            return: 'results, id, caseName'
+        }
+
+        if (concept.trim() === '' || concept === undefined) {
+            next(false, "Nothing to search.", []);
+        } else {
+            discovery.query(paramsConceptFilter, (error, results) => {
+                if (error) {
+                    console.log(error);
+                    next(false, error, []);
+                } else {
+                    console.log(results)
+                    next(true, [], results);
+                }
+            }); 
+        }
+    },
+
+    searchCasesFromCategory: function(req, res, next) {
+        const category = req.params.text;
+
+        const filterStr = "enriched_text.categories.label:" + category;
+
+        const paramsCategoryFilter = {
+            'query': filterStr,
+            'environment_id':environmentId,
+            'collection_id': collectionId,
+            'configuration_id': configurationId,
+            return: 'results, id, caseName'
+        }
+
+        if (category.trim() === '' || category === undefined) {
+            next(false, "Nothing to search.", []);
+        } else {
+            discovery.query(paramsCategoryFilter, (error, results) => {
+                if (error) {
+                    console.log(error);
+                    next(false, error, []);
+                } else {
+                    console.log(results)
+                    next(true, [], results);
+                }
+            }); 
+        }
     },
 
     getSimilarCasesFromID: function(req, res, next) {
@@ -247,9 +298,9 @@ module.exports = {
         } else {
             discovery.addJsonDocument(document_obj, function (err, response) {
                 if (err) {
-                    next(false, err, []);
+                    next(false, err);
                 } else {
-                    next("Success, case inserted into collection."); 
+                    next(true); 
                 }
             });
         }

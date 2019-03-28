@@ -9,7 +9,7 @@ import * as constants from '../../static/constants.js';
 
 import ClipLoader from '../Clip_Loader.js';
 
-import {  Modal, Button } from 'react-bootstrap';
+import {  Modal, Button, InputGroup, FormControl, Form} from 'react-bootstrap';
 
 class ManageCasesLoaded extends Component {
 
@@ -18,6 +18,9 @@ class ManageCasesLoaded extends Component {
         
         this.state = { 
             caseCollection:[],
+            validated: false,
+            search: '',
+            searchCollection: [],
             formIsValid:false, 
             caseToEdit:[], 
             caseToRemove:[], 
@@ -52,6 +55,8 @@ class ManageCasesLoaded extends Component {
         this.handleCloseDelete = this.handleCloseDelete.bind(this);
 
         this.viewCase = this.viewCase.bind(this); 
+        this.editSearch = this.editSearch.bind(this);
+        this.emptySearch = this.emptySearch.bind(this);
 
     }
 
@@ -78,6 +83,7 @@ class ManageCasesLoaded extends Component {
         });
 
         this.setState({ caseCollection: tempCollection });
+        this.setState({ searchCollection: tempCollection });
 
     }
 
@@ -188,20 +194,80 @@ class ManageCasesLoaded extends Component {
         console.log(orig.key);
     }
 
+    editSearch() {
+        if (this.state.search !== '') {
+            let cases = this.state.caseCollection;
+            let regex = this.state.search + "*";
+
+            const reg = new RegExp(regex,'gi');
+
+            cases = cases.filter(function(el) {
+                return reg.test(el.props.caseName);
+            });
+
+            this.setState({searchCollection: cases});
+        }
+    }
+
+    emptySearch() {
+        this.setState({
+            search: '',
+            searchCollection: this.state.caseCollection
+        });
+
+    }
+
+  async handleInputChange(event) {
+      const target = event.target;
+      const name = target.name;
+
+      this.setState({ [name]: target.value });
+  }
+
   render() {
+    const { validated } = this.state;
     return (
         <div>
             <div className="container pageBody">
 
-                <CasesTable 
-                    dataCollection={this.state.caseCollection} />  
+                <h4 className="display-4">Manage Cases</h4>
 
-                <Button 
-                bsstyle="primary"
-                bssize="small"
-                onClick={this.downloadAllJson}>
-                    Download all JSON
-                </Button>
+                <InputGroup className="mb-3">
+                    <Form.Control
+                    type="text"
+                    required
+                    name="search"
+                    placeholder="Search by Case Name"
+                    aria-label="Case Name"
+                    onChange={this.handleInputChange} 
+                    onKeyDown={this.editSearch}
+                    onKeyUp={this.editSearch}
+                    aria-describedby="basic-addon2"
+                    />
+                    <InputGroup.Append>
+                    <Button 
+                        variant="outline-secondary"
+                        onClick={this.editSearch}>
+                        <span className="fa fa-search"/>
+                    </Button>
+                    <Button 
+                        variant="outline-secondary"
+                        onClick={this.emptySearch}>
+                        <i className="fa fa-minus"/>
+                    </Button>
+                    </InputGroup.Append>
+                </InputGroup>
+
+                <CasesTable 
+                    dataCollection={this.state.searchCollection} />  
+
+                <p>
+                    Matching {this.state.searchCollection.length} result(s).
+
+                </p>
+                <p>
+                    {this.state.caseCollection.length} case(s) in total.
+                </p>
 
                 <Modal 
                     show={this.state.showEdit} 
@@ -209,31 +275,31 @@ class ManageCasesLoaded extends Component {
                 <Modal.Header closeButton>
                     <Modal.Title>Edit Case</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                        <EditCaseForm 
-                            hs={this.handleSubmitUpdate} 
-                            hic={this.handleUpdateChange} 
-                            cte={this.state.caseToEdit} />
-                </Modal.Body>
+                    <Modal.Body>
+                            <EditCaseForm 
+                                hs={this.handleSubmitUpdate} 
+                                hic={this.handleUpdateChange} 
+                                cte={this.state.caseToEdit} />
+                    </Modal.Body>
                 </Modal>
 
                 <Modal 
                     show={this.state.showDelete} 
                     onHide={this.handleCloseDelete}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Confirm delete?</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                        <RemoveCaseForm 
-                            hs={this.handleSubmitDelete} 
-                            ctd={this.state.caseToRemove} />
-                </Modal.Body>
-                <Modal.Footer>
-                    {<ClipLoader 
-                        loading={this.state.deleteLoading}
-                        size={20}/>
-                    }
-                </Modal.Footer>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Confirm delete?</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                            <RemoveCaseForm 
+                                hs={this.handleSubmitDelete} 
+                                ctd={this.state.caseToRemove} />
+                    </Modal.Body>
+                    <Modal.Footer>
+                        {<ClipLoader 
+                            loading={this.state.deleteLoading}
+                            size={20}/>
+                        }
+                    </Modal.Footer>
                 </Modal>
 
             </div>
