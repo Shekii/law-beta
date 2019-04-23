@@ -16,9 +16,9 @@ router.get('/cases_discovery', function(req, res, next) {
 
         if (err != null) {
             console.log("NUM_DOCS_IN_COLLECTION:"+data.length);
-            return res.json({ success: true, data: data });
+            return res.status(200).json({ success: true, data: data });
         } else {
-            return res.json({ success: false });
+            return res.status(404).json({ success: false });
            
         }
     });

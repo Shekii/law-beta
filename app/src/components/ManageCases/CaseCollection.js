@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Badge } from 'react-bootstrap'
+import {Button, Badge, OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 
 const CaseCollection = (props) => {
@@ -40,32 +40,56 @@ const CaseCollection = (props) => {
             </td>
             <td id="caseEditCell"> 
                 <div>
-						<Button id="controlButton" 
-						    onClick={boundEditCase}
+                    <OverlayTrigger
+                        overlay={
+                            <Tooltip id={`tooltip-1`}>
+                            <strong>Edit Case</strong>
+                            </Tooltip>
+                        }
+                        >
+                        <Button id="controlButton" 
+                            onClick={boundEditCase}
                             variant="outline-primary"
-						>
+                        >
                         <i className="fa fa-edit"/>
-						</Button>
+                        </Button>
+                    </OverlayTrigger>
                 </div>
             </td>
             <td id="caseDeleteCell">
                 <div>
-						<Button 
-                        variant="outline-danger"
-						onClick={boundRemoveCase}
-						>
-                        <i className="fa fa-trash"/>
-						</Button>
+                        <OverlayTrigger
+                            overlay={
+                                <Tooltip id={`tooltip-2`}>
+                                <strong>Delete Case</strong>
+                                </Tooltip>
+                            }
+                            >
+                            <Button 
+                            variant="outline-danger"
+                            onClick={boundRemoveCase}
+                            >
+                            <i className="fa fa-trash"/>
+                            </Button>
+                        </OverlayTrigger>
                 </div>
             </td>
             <td>
                 <div id="caseViewCell">
-						<Button 
-                            variant="outline-info"
-						    href={viewURL}
-						>
-                        <i className="fa fa-eye"/>
-						</Button>
+                        <OverlayTrigger
+                            overlay={
+                                <Tooltip id={`tooltip-3`}>
+                                <strong>Case Analysis Report</strong>
+                                </Tooltip>
+                            }
+                            >
+                            <Button 
+                                variant="outline-info"
+                                href={viewURL}
+                            >
+                            <i className="fa fa-eye"/>
+                            </Button>
+                        </OverlayTrigger>
                 </div>
             </td>
         </tr>

@@ -60,7 +60,7 @@ module.exports = {
         }
         discovery.query(params, (error, results) => {
             if (error) {
-                next(false, err, []);
+                next(false, error, []);
             } else {
                 if (!results.results[0].caseName !== '')
                     next(true, [], results.results);

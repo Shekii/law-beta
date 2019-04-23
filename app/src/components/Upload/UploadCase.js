@@ -66,7 +66,8 @@ class UploadCase extends Component {
             this.setState({message: item.message});
             this.setState({loading: false});
 
-            this.setState({caseName: '', text: '', caseDate: ''});
+
+            //this.setState({caseName: '', text: '', caseDate: ''});
         } else {
           this.setState({error: item.message})
         }
