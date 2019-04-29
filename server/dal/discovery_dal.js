@@ -197,7 +197,7 @@ module.exports = {
                 next(false, error, []);
             } else {
 
-                    console.log (results.results[0]);
+                    //console.log (results.results[0]);
                 if (results.results[0].caseName != '' &&
                     results.results[0].caseDate != '' &&
                     results.results[0].text != '') {
