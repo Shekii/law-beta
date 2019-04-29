@@ -14,22 +14,22 @@ chai.use(chaiHttp);
 /*
   * Test the /GET route
   */
-  describe('/GET cases', () => {
-      it('it should GET all the cases', (done) => {
-        setTimeout(() => {
-            chai.request(server)
-                .get('/api/cases_discovery')
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.should.be.a('object');
-                    //res.body.length.should.not.be.eql(0) ;
+//   describe('/GET cases', () => {
+//       it('it should GET all the cases', (done) => {
+//         setTimeout(() => {
+//             chai.request(server)
+//                 .get('/api/cases_discovery')
+//                 .end((err, res) => {
+//                     res.should.have.status(200);
+//                     res.body.should.be.a('object');
+//                     //res.body.length.should.not.be.eql(0) ;
                     
-                    done();
-                });
-        }, 15000);
-      });
+//                     done();
+//                 });
+//         }, 15000);
+//       });
 
-  });
+//   });
 
 //     describe('/GET specific case', () => {
 

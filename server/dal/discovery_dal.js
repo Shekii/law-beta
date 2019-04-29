@@ -34,18 +34,6 @@ module.exports = {
 
         let queryString ="";
 
-        // queryDiscovery(queryString, function(err, queryResults) {
-
-        //     if (err) {
-        //         console.log(err);
-        //         next(false, err, []);
-        //     }
-
-        //     queryResults = queryResults.results;
-
-        //     next(true, [], queryResults);
-        // });
-
         var params = {
             'query': queryString,
             'environment_id':environmentId,

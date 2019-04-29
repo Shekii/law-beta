@@ -28,6 +28,7 @@ class ManageCases extends Component {
                     tempCollection.push(it);
                 })
                 this.setState({ dataCollection: tempCollection });
+
             })
             .catch((error) => {
                 console.error(error);
